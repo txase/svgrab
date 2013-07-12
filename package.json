@@ -1,6 +1,6 @@
 {
   "name": "svgrab",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Chase Douglas <chasedouglas@gmail.com>",
   "description": "Tool for grabbing SVGs from websites",
   "contributors": [
