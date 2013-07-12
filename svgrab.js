@@ -39,6 +39,9 @@ Seq()
   .par('svg', function() {
     this.vars.page.evaluate(function(selector) {
       var svg = $(selector);
+      if (!svg.length)
+        return new Error('No SVG found on page');
+
       var attrs = Array.prototype.slice.call(svg[0].attributes);
 
       attrs = attrs.map(function(attr) {
@@ -58,6 +61,9 @@ Seq()
     }, this, args.selector);
   })
   .seq('content', function(content) {
+    if (typeof content === 'object') // It's an error!
+      return this(new Error(content.message));
+
     content = JSON.parse(content);
 
     var string = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n';
