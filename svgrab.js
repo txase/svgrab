@@ -29,8 +29,8 @@ Seq()
     page.open(args.site, this);
   })
   .seq('inject', function() {
-    this.vars.page.injectJs('lib/innersvg.js');
-    this.vars.page.injectJs('lib/jquery-2.0.3.min.js');
+    this.vars.page.injectJs(__dirname + '/lib/innersvg.js');
+    this.vars.page.injectJs(__dirname + '/lib/jquery-2.0.3.min.js');
     this.ok();
   })
   .seq('wait', function() {
