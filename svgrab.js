@@ -38,26 +38,30 @@ Seq()
   })
   .par('svg', function() {
     this.vars.page.evaluate(function(selector) {
-      var svg = $(selector);
-      if (!svg.length)
-        return new Error('No SVG found on page');
+      try {
+        var svg = $(selector);
+        if (!svg.length)
+          return new Error('No SVG found on page');
 
-      var attrs = Array.prototype.slice.call(svg[0].attributes);
+        var attrs = Array.prototype.slice.call(svg[0].attributes);
 
-      attrs = attrs.map(function(attr) {
-        return attr.nodeName + '="' + attr.nodeValue + '"';
-      });
-      
-      var styles = '';
-      var sheets = Array.prototype.slice.call(document.styleSheets);
-      sheets.forEach(function(sheet) {
-        var rules = Array.prototype.slice.call(sheet.cssRules);
-        rules.forEach(function(rule) {
-          styles += rule.cssText;
+        attrs = attrs.map(function(attr) {
+          return attr.nodeName + '="' + attr.nodeValue + '"';
         });
-      });
+      
+        var styles = '';
+        var sheets = Array.prototype.slice.call(document.styleSheets);
+        sheets.forEach(function(sheet) {
+          var rules = Array.prototype.slice.call(sheet.cssRules);
+          rules.forEach(function(rule) {
+            styles += rule.cssText;
+          });
+        });
 
-      return JSON.stringify({attrs: attrs, innerSVG: svg.html(), styles: styles});
+        return JSON.stringify({attrs: attrs, innerSVG: svg.html(), styles: styles});
+      } catch (e) {
+        return e;
+      }
     }, this, args.selector);
   })
   .seq('content', function(content) {
